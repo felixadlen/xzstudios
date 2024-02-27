@@ -1,0 +1,50 @@
+---
+import RelatedPosts from "./RelatedPosts.astro";
+
+const { posts, currentPostUrl } = Astro.props; 
+---
+
+
+
+
+
+
+<ul class="related-posts-list">
+  {posts.filter(post => post.url !== currentPostUrl).map(post => (
+    <li key={post.url}>
+      <RelatedPosts post={post} />
+    </li>
+  ))}
+</ul>
+
+<style>
+  ul {
+    /* background-color: white; */
+    margin: 0 0 4rem 0;
+    list-style: none;
+    padding: 2rem 2rem;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 15px;
+    flex-direction: row;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    ul {
+      margin: 4rem 0 0 0;
+      padding: 8rem 2rem;
+      gap: 3rem;
+
+    }
+    
+  }
+
+  .related-posts-list li {
+  display: none; /* Hide all items by default */
+}
+
+.related-posts-list li:nth-child(-n+3) {
+  display: block; /* Show only the first 3 items */
+}
+</style>

@@ -1,0 +1,287 @@
+---
+import Layout from './Page.astro';
+import Container from '../components/Container.astro';
+import { formatDate, slugify } from '../utils/helpers';
+import RelatedPostsList from '../components/RelatedPostsList.astro';
+
+const { frontmatter } = Astro.props;
+
+const seo = {
+  title: frontmatter.title,
+  subtitle: frontmatter.subtitle,
+  description: frontmatter.description,
+  image: frontmatter.image,
+};
+
+
+// TEST-CAROUSEL BOTTOM 
+
+const allPosts = (await Astro.glob('../pages/stories/*.{md,mdx}')).sort(
+    (a, b) => new Date(b.frontmatter.publishedAt).valueOf() - new Date(a.frontmatter.publishedAt).valueOf()
+);
+
+
+
+//  END OF TEST-CAROUSEL
+---
+
+<Layout seo={seo}>
+  
+  <a href="/stories/" class="showAllPosts">Show all stories</a>
+
+
+  <h1 class="post-content__title">{frontmatter.title}</h1>
+  <p class="post-content__date"><span style="color: #C83C4E; font-weight: 700;font-style: normal;text-transform: uppercase;">{frontmatter.chapter}&nbsp;</span>&nbsp;
+    <time>{formatDate(frontmatter.publishedAt)}</time>&nbsp;in {frontmatter.location}     </p>
+
+ 
+  {
+    frontmatter.image && (
+        <picture>
+            {/* Check if the image path includes a file extension, append .webp for webp format */}
+            <source srcset={`${frontmatter.image.includes('.') ? frontmatter.image : frontmatter.image + '.webp'}`} type="image/webp" />
+
+            {/* Check if the image path includes a file extension, append .png as a fallback */}
+            <img
+                width="100%"
+                height="630"
+                class="post-content__img"
+                loading="eager"
+                src={`${frontmatter.image.includes('.') ? frontmatter.image : frontmatter.image + '.png'}`}
+                alt={frontmatter.alt ? frontmatter.alt : 'Post Image'}
+            />
+        </picture>
+    )
+} 
+  <Container>
+
+    <article class="post-content__article">
+      <div class="post-content__top fade-in">
+
+        <!-- AKTIVERA NEDAN DEL OM VI VILL ANVÄNDA POST-TAGGAR FRAMÖVER -->
+        <!-- {
+          frontmatter.category && (
+            <p class="post-content__category">
+              <a href={`/blog/category/${slugify(frontmatter.category)}`}>
+                {frontmatter.category}
+              </a>
+            </p>
+          )
+        } -->
+
+        
+
+      
+
+
+        <!-- <h1 class="post-content__title">{frontmatter.title}</h1> -->
+        <h2 class="post-content__subtitle">{frontmatter.subtitle}</h2>
+
+
+          <!-- <h4 class="post-content__chapter">{frontmatter.chapter}</h4> -->
+
+       
+      </div>
+      <div class="post-content__content flow fade-in">
+        <slot />
+      </div>
+
+    </article>
+    
+
+</Container>
+<div id="blog-BGbox">
+  <span style="font-weight: 600";>XZ STUDIOS</span> helps small businesses to make big impressions. We specialize in marketing, advertising and graphic design with focus on building brands. With our base in Malmö, we use the world as our inspiration to explore new ideas. Let’s turn thoughts into conversations – <strong class="btnOpenForm inline-contactForm">we're just a message away!</strong></div>
+  
+  <RelatedPostsList posts={allPosts} currentPostUrl={Astro.props.url} />
+
+</Layout>
+
+
+
+
+<style>
+    #blog-BGbox {
+           background-color: #051118;              
+        padding: 2rem 2rem;
+        color: white;
+        border: 1px solid #1A080A1C;
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+    }
+    @media (min-width: 768px) {
+#blog-BGbox {
+  padding: 1.4rem 2rem;
+  border-radius: 8px;
+  max-width: 900px;
+  margin: 3rem auto 0rem auto;
+
+}
+      
+    }
+
+  .post-content__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .showAllPosts {
+  display: flex;
+  justify-content: left;
+  padding: 0rem 10rem;
+  margin-top: 2.1rem;
+  text-decoration:none;
+  padding-bottom: 0.5rem;
+  }
+  @media (min-width: 768px) {
+    .showAllPosts {
+    margin-top:6rem;
+    /* text-decoration: underline; */
+    }
+  }
+
+  .showAllPosts::before {
+    content: '◀︎';
+    font-size: 10px; 
+    margin-top: 7px;
+    margin-right: 0.4rem;
+  }
+/* @media (min-width: 768px) {
+  .showAllPosts::before {
+    display: none;
+  } */
+
+  
+/* } */
+
+  
+  .post-content__category {
+    padding: 0.5rem 1rem;
+    font-size: var(--step--1);
+    background-color: var(--theme-surface-1);
+    border-radius: 2rem;
+  }
+  .post-content__category a {
+    text-decoration: none;
+  }
+  .post-content__category a:hover {
+    opacity: 0.8;
+  }
+  .post-content__article {
+    padding: 0vh 0;
+    /* background-color: grey; */
+  }
+
+
+  .post-content__title {
+    font-size: 3rem;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    padding: 2rem;
+    color: #051118;
+    margin-top: 4rem;
+
+  }
+@media (min-width: 1000px) {
+  .post-content__title {
+font-size: 5vw;
+margin: 8rem 0rem 2rem 0rem;
+text-align: left;
+display: flex;
+justify-content: center;
+padding: 0rem 10rem;
+line-height: 1.05;
+}
+}
+
+
+  .post-content__subtitle {
+    font-weight: 200;
+    font-size: 1.7rem;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (min-width: 768px;) {
+    post-content__subtitle {
+      font-size: var(--step-5);
+      font-size: 1.6rem;
+    }
+    }
+
+
+ .post-content__chapter {
+  background-color: #C83C4E;
+  padding: 0.1rem 1rem;
+  border-radius: 10px;
+  color: white;
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-bottom: 0rem;
+ }
+
+
+  .post-content__date {
+    /* margin: 0 auto; */
+    font-size: var(--step--1);
+    color: var(--color-gray);
+    font-style: italic;
+    margin-bottom: 6rem;
+    padding: 0rem 2rem;
+  }
+  @media (min-width: 768px) {
+    .post-content__date {
+      padding: 0rem 10rem;
+      margin-bottom: 12rem;
+      display: flex; 
+
+ 
+    }
+    
+  }
+  .post-content__img {
+    margin: 1rem 0 1.5rem 0;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 4/4;
+    object-fit: cover;
+  }
+  @media (min-width: 768px) {
+    .post-content__img {
+      margin: 4rem 2rem 1.5rem 2rem;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+    box-shadow: inset 0px -40px 15px -5px rgba(0, 0, 0, 0.5);
+
+    /* border-radius: 1rem; */
+    aspect-ratio:16/9;
+    }
+  }
+  .post-content__content :global(img) {
+    display: block;
+    margin: 2rem auto;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+  }
+
+  .post-content__content {
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+margin: 0 auto;
+  }
+
+
+  .inline-contactForm {
+  cursor: pointer;
+}
+.inline-contactForm:hover {
+  color:#C83C4E;
+}
+
+</style>

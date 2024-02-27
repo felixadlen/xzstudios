@@ -1,0 +1,138 @@
+---
+const {post} = Astro.props;
+import {formatDate} from '../utils/helpers'
+import PostExcerpt from '@igor.dvlpr/astro-post-excerpt'
+import { PropHeadings } from '@igor.dvlpr/astro-post-excerpt';
+import { PropRenderer } from '@igor.dvlpr/astro-post-excerpt';
+
+---
+
+<a class="post-preview__link fade-in" href={post.url}>
+  <article class="post-preview__article">
+    
+    <div class="post-preview__image-container">
+      <picture>
+        <source srcset={`${post.frontmatter.image.includes('.') ? post.frontmatter.image : post.frontmatter.image + '.webp'}`} type="image/webp" />
+        <img
+            class="post-preview__img"
+            src={`${post.frontmatter.image.includes('.') ? post.frontmatter.image : post.frontmatter.image + '.png'}`}
+            alt={`Featured image for ${post.frontmatter.title}`}
+        />
+      </picture>
+      <h2 class="post-preview__title">{post.frontmatter.title}</h2>
+      <p class="post-preview__date">{formatDate(post.frontmatter.publishedAt)}</p>
+
+    </div>
+  
+    <div class="post-preview__text">
+      <p class="post-content__content">{post.frontmatter.text}</p> 
+    </div>
+  </article>
+  </a>
+  
+<style>
+
+.post-preview__image-container {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+filter: grayscale(70%);
+transition: all 0.4s ease;
+}
+
+.post-preview__image-container:hover {
+  transform: scale(1.02);
+  filter: grayscale(0%);
+
+}
+
+.post-preview__title {
+  position: absolute;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 1rem 1rem;
+  /* bottom: 10px; /* Adjust as needed */
+ text-align: center;
+  color: white; /* Adjust color as needed for visibility */
+  background-color: rgba(0, 0, 0, 0.4); /* Optional: for better visibility */
+  padding: 5px; /* Optional: for better visibility */
+  border-radius: 5px; /* Optional: for styling */
+}
+
+
+
+.post-preview__date {
+  display: none;
+  font-size: 1rem;
+  color: white;
+  position: absolute;
+  font-size: 1rem;
+  bottom: 10px; /* Adjust as needed */
+  right: 10px;
+}
+
+.post-preview__link {
+  text-decoration: none;
+}
+/* .post-preview__link:hover .post-preview__img {
+  box-shadow: rgba(0, 0, 0, 0.1) 0 10px 20px 0;
+  transform: scale(1.02);
+}
+.post-preview__link:hover .post-preview__text {
+  transform: scale(1.02);
+
+} */
+.post-preview__article {
+  display: column;
+  /* background-color: grey; */
+  /* width: 320px;; */
+  gap: 3rem;
+}
+.post-preview__text {
+  transition: transform 0.2s ease-in-out;
+  padding: 0rem 1rem;
+  margin-top: 1rem;
+}
+.post-preview__category {
+  width: fit-content;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--theme-surface-1);
+  border-radius: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--step--2);
+
+}
+.post-preview__text h2{
+  font-size: var(--step-1);
+}
+.post-preview__img {
+  max-width: 400px;
+  height: 260px;
+  object-fit: cover;
+border-radius: 12px;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .post-preview__article {
+    grid-template-columns: 1fr;
+  }
+  .post-preview__img {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .post-preview__text {
+    margin-top: 1rem;
+  }
+  .post-preview__link:hover .post-preview__img {
+    box-shadow: none;
+    transform: none;
+  }
+  .post-preview__link:hover .post-preview__text {
+    transform: none;
+  }
+}
+</style>

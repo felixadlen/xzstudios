@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WE ARE XZ</title>
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/iza3jks.css" />
+    <link
+      rel="stylesheet"
+      href="//use.fontawesome.com/releases/v6.5.0/css/all.css"
+    />
+    <script type="text/javascript">
+      // Clarity
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "jovcl27t8k");
+    </script>
+  </head>
+  <body>
+    <div id="master-menu"></div>
+
+    <section id="white-bg">
+      <div class="highlightTextContainer">
+        <h1 class="fade-highlight desktop">we are xz studios</h1>
+        <h1 class="nofade-header mobile">
+          we are <br />
+          xz studios
+        </h1>
+
+        <h2 class="intro-subheader" style="margin-top: 1.5rem">
+          Just another damn marketing studio with a new approach.
+        </h2>
+      </div>
+      <img class="bird" src="img/mås.png" alt="" />
+    </section>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var bird = document.querySelector(".bird");
+        var clickCount = 0;
+
+        bird.addEventListener("click", function () {
+          clickCount++;
+
+          switch (clickCount) {
+            case 1:
+              // First click - perform a backflip with a higher jump, 1s duration
+              this.style.animation = "jumpAndBackflip 1s ease forwards";
+              break;
+            case 2:
+              // Second click - reverse the backflip, 4s duration
+              this.style.animation = "reverseBackflip 7s ease forwards";
+              clickCount = 0; // Reset click count for the next cycle
+              break;
+            case 3:
+              // Third click - fly away
+              this.classList.add("clicked");
+              this.style.animation = "none"; // Reset the animation property
+              break;
+          }
+        });
+      });
+    </script>
+    <section class="dark-bg">
+      <div class="about-us">
+        <h2 class="white">"I've got an idea"</h2>
+
+        <br />
+        <p class="white">
+          XZ was born from the desire for change – a studio where creativity is
+          fueled by new experiences, diverse perspectives, and an eagerness to
+          do something new and different.
+        </p>
+        <br />
+        <p class="white">
+          Together, Inez and Felix, bring years of marketing expertise to XZ and
+          the mission is simple: to help small businesses create impactful and
+          recognized brands. But to do that, we need to commit.
+        </p>
+        <br />
+        <p class="white">
+          The journeys starts with us on our way to Albania, our first stop to
+          explore new ideas around the world.
+        </p>
+      </div>
+      <!-- <div class="fullscreen-img">
+        <div class="about-us">
+          <h2 class="red-color">
+            a personal marketing duo from<br />malmö exploring the world
+          </h2>
+          <p class="dark-color">
+            "I have an idea" Felix said one day. Inez liked the idea. XZ started,
+            and we left Malmö for a while.
+          </p>
+          <br />
+          <p class="dark-color">
+            XZ was born from a shared desire for change – a studio where
+            creativity is fueled by new experiences, diverse perspectives, and an
+            eagerness to do something different.
+          </p>
+          <br />
+          <p class="dark-color">
+            Inez and Felix bring years of marketing expertise to XZ and our
+            mission is simple: to assist small businesses in creating impactful,
+            personal brands. XZ is more than a studio; it's a journey into the
+            heart of creativity, where each project is a part of a story, teaching
+            us to learn, grow, and leave a lasting impression.
+          </p>
+      </div>  -->
+    </section>
+
+    <section id="white-bg">
+      <h2 class="dark">hello</h2>
+    </section>
+
+    <!-- NEDAN HÄMTAR FOOTER + KONTAKTFORM -->
+    <div id="openContactForm" class="hidden"></div>
+    <footer id="master-footer"></footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

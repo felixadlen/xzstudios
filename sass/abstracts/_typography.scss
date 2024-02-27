@@ -1,0 +1,53 @@
+@font-face {
+  font-family: Juniper;
+  src: url("fonts/Juniper-Bay-Regular.a86e1ea.woff") format("woff");
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: Quentin;
+  src: url("fonts/quentin-webfont.woff") format("woff");
+  font-weight: 800;
+}
+
+h1 {
+  font-size: 4.4rem;
+  // display: none;
+  line-height: 1;
+  font-weight: 800;
+  color: #c83c4e;
+  @media (min-width: $breakpoint-tablet) {
+    font-size: 6vw;
+  }
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h2.white {
+  color: white;
+}
+
+h4 {
+  font-size: 5rem;
+}
+
+h5 {
+  font-family: "Juniper";
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+p.white {
+  color: white;
+}
+
+p.dark {
+  color: #1c1e21;
+}
+
+p {
+  font-size: 1.2rem;
+}

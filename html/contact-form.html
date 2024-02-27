@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+  />
+  </head>
+  <body>
+    <div id="contactForm" class="form-popup-bg">
+      <div class="form-container">
+        <button class="btnCloseForm close-button"><span class="material-symbols-rounded">
+          close
+          </span></button>
+        <h3>Contact Us</h3>
+        <p>Maybe our friendship started with just a "hello".</p>
+        <form method="POST" id="form">
+          <input type="hidden" name="access_key" value="6fd91bf0-12eb-49fc-9d5b-d6fd3ab684b5">
+          <input type="hidden" name="subject" value="New Submission from Web3Forms">
+          <input type="checkbox" name="botcheck" id="" style="display: none;">
+
+         
+          <div class="form-group">
+            <input
+              type="text"
+              name="name"
+              required
+              class="form-control"
+              placeholder="Your name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              required
+              class="form-control"
+              placeholder="e.g. john@doe.se"
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              name="message"
+              required
+              class="form-control"
+              placeholder="Your message: Can you make my company go yummy?"
+            style="padding-top: 2%;height: 200px;"></textarea>
+          </div>
+          <!-- <div class="h-captcha" data-captcha="true"></div> -->
+          <button id="sendNowBtn" type="submit" class="btn-outline-black">Send now</button>
+          <div class="load"> 
+            <div class="progress"></div>
+            <div class="progress"></div>
+            <div class="progress"></div>
+        </div>
+          <div id="result"></div>
+
+        </form>
+        <p id="thankYouMessage" class="hidden"></p>
+
+      </div>
+
+
+
+    <script src="../js/contact-form.js"></script>
+  </body>
+</html>

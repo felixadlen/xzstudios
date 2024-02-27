@@ -1,0 +1,20 @@
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+*,
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "greycliff-cf", "sans-serif";
+  font-style: normal;
+  font-size: 1.125rem;
+  color: #040405;
+  background-color: #e8e8e8;
+  ::selection {
+    background: #c83c4f26;
+  }
+}

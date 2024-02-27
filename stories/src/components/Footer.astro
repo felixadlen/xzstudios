@@ -1,0 +1,67 @@
+---
+import { settings } from "../data/settings";
+import Container from "./Container.astro";
+import SocialList from './SocialList.astro';
+import LittleSticksPlug from "./LittleSticksPlug.astro";
+---
+
+<link rel="stylesheet" href="/contact-form.css">
+<link rel="stylesheet" href="/footer.css">
+
+
+
+<div id="master-footer"></div>
+<div id="openContactForm" class="hidden"></div>
+
+
+<script is:global>
+  function loadHTML(url, id, callback) {
+    fetch(url)
+      .then(response => response.text())
+      .then(data => {
+        const container = document.getElementById(id);
+        container.innerHTML = data;
+        executeScripts(container);
+        if (callback) callback();
+      })
+      .catch(err => console.error(err));
+  };
+  
+  function executeScripts(container) {
+    // Find all script tags in the container
+    const scripts = Array.from(container.querySelectorAll("script"));
+  
+    // For each script, create a new script element and copy attributes
+    scripts.forEach(oldScript => {
+      const newScript = document.createElement("script");
+      Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+  
+      // If the script has a src attribute, set it anew to force it to load
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
+      } else {
+        newScript.textContent = oldScript.textContent;
+      }
+  
+      // Replace the old script with the new one
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', (event) => {
+    loadHTML('/footer.html', 'master-footer');
+    loadHTML('/contact-form.html', 'openContactForm', () => {
+      loadExternalScript('/contact-form.js');
+    });
+  });
+  
+  function loadExternalScript(src) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = false; // To ensure the script is executed in the order it's loaded
+    document.head.appendChild(script);
+  }
+  
+  
+  </script>
+

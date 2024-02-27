@@ -1,0 +1,22 @@
+{
+  "name": "stories",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^1.0.0",
+    "@igor.dvlpr/astro-post-excerpt": "^2.1.0",
+    "astro": "^4.2.6",
+    "astro-icon": "^0.7.3"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^0.11.4",
+    "@astrojs/netlify": "^5.0.0",
+    "lit": "^2.3.1"
+  }
+}

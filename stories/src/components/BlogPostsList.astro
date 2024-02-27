@@ -1,0 +1,33 @@
+---
+import BlogPostPreview from "./BlogPostPreview.astro";
+
+
+
+const {posts} = Astro.props;
+const initialPostCount = 3; // Number of posts to display initially
+---
+
+
+
+
+<ul>
+  {posts.map((post, index) => (
+    <li key={post.url} class={`post ${index >= initialPostCount ? 'hidden' : ''}`}>
+      <BlogPostPreview post={post} />
+    </li>
+  ))}
+</ul>
+
+<style>
+  ul {
+    margin: 0 0 10vh 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+align-items: center;    /* display: grid;
+    grid-template-columns: 1fr; */
+    gap: 3rem;
+    /* background-color: yellow; */
+  }
+</style>

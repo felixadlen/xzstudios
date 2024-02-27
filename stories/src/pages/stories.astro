@@ -1,0 +1,264 @@
+
+---
+import Layout from '../layouts/Page.astro'
+import Container from '../components/Container.astro';
+import BlogPostsList from '../components/BlogPostsList.astro';
+
+
+const allPosts = (await Astro.glob('./stories/*.{md,mdx}')).sort(
+    (a, b) => new Date(b.frontmatter.publishedAt).valueOf() - new Date(a.frontmatter.publishedAt).valueOf()
+);
+
+let initialPostCount = 3;
+
+const seo = {
+  title: 'STORIES by XZ',
+  description: 'Insights and reflection',
+};
+
+let displayedPosts = allPosts.slice(0, initialPostCount);
+
+function loadMorePosts() {
+  const nextPosts = allPosts.slice(displayedPosts.length, displayedPosts.length + initialPostCount);
+  displayedPosts = [...displayedPosts, ...nextPosts];
+  console.log('du klickade');
+  
+}
+
+
+---
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<link rel="stylesheet" href="https://use.typekit.net/iza3jks.css">
+
+
+
+<Layout seo={seo}>
+  <Container>
+    <!-- <div class="home-hero-text__container">
+      <h1>our stories</h1>
+      <p class="subheader-stories-index">When you explore, you create stories.<br>
+        Here are our insights and random reflections from exploring new marketing ideas around the world.</p>
+      </div> -->
+
+
+    <section id="stories-header">
+   
+
+      <div class="highlightTextContainer">
+        
+        <h1 class="fade-highlight">our stories</h1>
+
+        <p class="subheader-stories-index">
+          When you explore, you create stories.
+          Here are our insights and random reflections from exploring new marketing ideas around the world.</p>      
+     
+          <div class="red-divider">
+
+          </div>
+        </div>
+
+
+    </section>
+    
+ 
+    <BlogPostsList posts={allPosts} />
+
+    <div class="pagination-link">
+      <button id="see-more-btn" on:click={loadMorePosts}>Funnier posts below &nbsp;<span class="material-symbols-outlined" style="position: relative;bottom: -7px;">
+        expand_more
+        </span></button>
+    </div>
+
+  </Container>
+</Layout>
+
+
+
+<!-- Nedan skript är för att ladda ytterligare inlägg nedåt. Får funka tillsvidare, tills en ordentlig pagination är på plats.  -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const seeMoreBtn = document.getElementById('see-more-btn');
+    let currentPostCount = 3;
+
+    seeMoreBtn.addEventListener('click', function() {
+      const hiddenPosts = Array.from(document.querySelectorAll('.post.hidden'));
+      const nextPosts = hiddenPosts.slice(0, 3);
+      nextPosts.forEach(post => post.classList.remove('hidden'));
+
+      // Check if there are any hidden posts left after revealing the next set
+      if (document.querySelectorAll('.post.hidden').length === 0) {
+        seeMoreBtn.style.display = 'none'; // Hide the button if no more hidden posts
+      }
+    });
+  });
+
+  // Nedan skript är för header fade in animation word-by word
+  const h2Element = document.querySelector('.fade-highlight');
+
+
+if (h2Element) {
+  h2Element.classList.add('visible');
+  animateWords(h2Element);
+} else {
+}
+
+function animateWords(element) {
+  let words = element.textContent.split(' ');
+  element.innerHTML = '';
+
+  words.forEach((word, index) => {
+    let wordSpan = document.createElement('span');
+    wordSpan.textContent = word + ' ';
+    wordSpan.classList.add('word-highlight');
+    wordSpan.style.animationDelay = `${0.5 + index * 0.5}s`;
+
+    console.log('Creating span:', word, index); // Log word and index
+
+    element.appendChild(wordSpan);
+  });
+}
+</script>
+
+
+
+<style>
+
+.red-divider {
+  margin-top: 3rem;
+  background-color: #c83c4e;
+  height: 12px;
+  width: 0; /* Start with 0 width */
+  animation: expandWidth 2s forwards; /* Apply the animation */
+  transform-origin: center; /* Ensure expansion from the center */
+}
+
+/* Keyframes for the expandWidth animation */
+@keyframes expandWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 10%;
+  }
+}
+  /* Fade in animation header */
+
+
+#stories-header {
+  height: 45vh;
+  width: 100%;
+  z-index: -100;
+  background-color: #e8e8e8;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 3rem;
+}
+
+#stories-header h3 {
+  margin: 2rem 0 1rem;
+  font: 200 1.5rem/1.5 sans-serif;
+  text-transform: lowercase;
+}
+
+#stories-header .highlightTextContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 8rem;
+  flex-direction: column;
+}
+
+#stories-header .intro-subheader, 
+#stories-header .nofade-header {
+  font-size: 1.6rem;
+  color: #1c1e21;
+  text-align: center;
+  font-weight: 400;
+}
+
+#stories-header .intro-subheader {
+  padding: 0 4rem;
+}
+
+#stories-header .fade-highlight {
+  opacity: 0;
+  font: 800 4rem/1.5 sans-serif;
+  transition: opacity 1s;
+  color: grey;
+}
+
+@media (min-width: 768px) {
+  #stories-header .fade-highlight {
+    font-size: 8vw;
+  }
+}
+
+#stories-header .fade-highlight.visible {
+  opacity: 1;
+}
+
+#stories-header {
+  .word-highlight {
+  display: inline;
+  color: grey;
+  animation: opacityFade 1s forwards, highlightWord 0.4s forwards;
+}}
+
+@keyframes highlightWord {
+  to {
+    color: #1c2535;
+  }
+}
+
+#stories-header h4 {
+  margin-top: -2rem;
+  font: 700 6rem/1.5 "Juniper", sans-serif;
+  color: #c83c4e;
+}
+/* Slut på fade in header animation */
+
+
+  .subheader-stories-index {
+    font-size: 1.4rem;
+    /* background-color: red; */
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .post.hidden {
+  display: none;
+}
+  .home-hero-text__container {
+    padding: 5vh 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+ .home-hero-text__container h1 {
+    text-align: center;
+    margin-bottom: 1.2rem;
+  }
+  .home-hero-text__container p {
+    margin-bottom: 5rem;
+    max-width: 500px;
+  text-align: center;
+  }
+  .pagination-link {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0rem;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  #see-more-btn:hover {
+    color: #c83c4e;
+    cursor:pointer;
+  }
+</style>

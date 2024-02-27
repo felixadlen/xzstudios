@@ -1,0 +1,235 @@
+---
+import Container from "./Container.astro";
+import Logo from "./Logo.astro";
+
+---
+
+
+
+
+
+<link rel="stylesheet" href="/menu.css">
+
+
+
+<div id="master-menu"></div>
+
+
+
+<script is:global>
+function loadHTML(url, id, callback) {
+  fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      const container = document.getElementById(id);
+      container.innerHTML = data;
+      executeScripts(container);
+      if (callback) callback();
+    })
+    .catch(err => console.error(err));
+};
+
+function executeScripts(container) {
+  // Find all script tags in the container
+  const scripts = Array.from(container.querySelectorAll("script"));
+
+  // For each script, create a new script element and copy attributes
+  scripts.forEach(oldScript => {
+    const newScript = document.createElement("script");
+    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+
+    // If the script has a src attribute, set it anew to force it to load
+    if (oldScript.src) {
+      newScript.src = oldScript.src;
+    } else {
+      newScript.textContent = oldScript.textContent;
+    }
+
+    // Replace the old script with the new one
+    oldScript.parentNode.replaceChild(newScript, oldScript);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  loadHTML('/menu.html', 'master-menu', () => {
+    loadExternalScript('/menu-script.js');
+  });
+});
+
+function loadExternalScript(src) {
+  const script = document.createElement('script');
+  script.src = src;
+  script.async = false; // To ensure the script is executed in the order it's loaded
+  document.head.appendChild(script);
+}
+
+
+</script>
+
+
+<script is:global>
+function loadHTML(url, id, callback) {
+  fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      const container = document.getElementById(id);
+      container.innerHTML = data;
+      executeScripts(container);
+      if (callback) callback();
+    })
+    .catch(err => console.error(err));
+};
+
+function executeScripts(container) {
+  // Find all script tags in the container
+  const scripts = Array.from(container.querySelectorAll("script"));
+
+  // For each script, create a new script element and copy attributes
+  scripts.forEach(oldScript => {
+    const newScript = document.createElement("script");
+    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+
+    // If the script has a src attribute, set it anew to force it to load
+    if (oldScript.src) {
+      newScript.src = oldScript.src;
+    } else {
+      newScript.textContent = oldScript.textContent;
+    }
+
+    // Replace the old script with the new one
+    oldScript.parentNode.replaceChild(newScript, oldScript);
+  });
+}
+document.addEventListener('DOMContentLoaded', (event) => {
+  loadHTML('/menu.html', 'master-menu', () => {
+    // Elements that are part of the dynamically loaded content
+    const menuButton = document.querySelector("a#menu-icon");
+    const menuBox = document.querySelector(".menu-box");
+    const overlay = document.querySelector(".menu-box-overlay");
+    const notification = document.querySelector(".notification-menu");
+
+    let isMenuOpen = false;
+
+    function openMenu() {
+      menuBox.style.display = "block";
+      menuButton.classList.add("close");
+      menuBox.classList.add("active");
+      isMenuOpen = true;
+      menuButton.style.transform = "scale(1)";
+      overlay.style.display = "block";
+      updatePointerEvents("auto");
+      if (notification) {
+        notification.style.display = "none";
+      }
+
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "hidden";
+        menuButton.style.transform = "scale(1.5)";
+      }
+    }
+
+    function closeMenu() {
+      menuBox.style.display = "none";
+      menuButton.classList.remove("close");
+      menuBox.classList.remove("active");
+      isMenuOpen = false;
+      menuButton.style.transform = "scale(1.4)";
+      overlay.style.display = "none";
+      updatePointerEvents("none");
+      history.replaceState(null, null, window.location.pathname);
+      if (notification) {
+        notification.style.display = "none";
+      }
+      if (window.innerWidth <= 768) {
+        document.body.style.overflow = "";
+      }
+    }
+
+    function updatePointerEvents(value) {
+      const menuItems = menuBox.querySelectorAll("li, a");
+      menuItems.forEach((item) => {
+        item.style.pointerEvents = value;
+      });
+    }
+
+    if (menuButton) {
+      menuButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (isMenuOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      menuButton.addEventListener('mouseover', function (e) {
+        if (isMenuOpen === false) {
+          menuButton.style.backgroundColor = 'black';
+        }
+      });
+
+      menuButton.addEventListener('mouseout', function (e) {
+        if (isMenuOpen === false) {
+          menuButton.style.backgroundColor = '';
+        }
+      });
+
+      menuButton.addEventListener('click', function (e) {
+        menuButton.style.backgroundColor = '';
+      });
+    }
+
+    const menuLinks = document.querySelectorAll(".menu-link");
+    menuLinks.forEach(function (menuLink) {
+      if (menuLink.href === window.location.href) {
+        menuLink.querySelector(".menu-object").classList.add("active-menu-object");
+      } else {
+        menuLink.parentNode.classList.add("inactive");
+      }
+    });
+
+    const hashFragment = window.location.hash;
+    if (hashFragment === "#menu") {
+      openMenu();
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!menuBox.contains(e.target) && !menuButton.contains(e.target) && isMenuOpen) {
+        closeMenu();
+      }
+    });
+
+    var menuObjects = document.querySelectorAll(".menu-object a");
+    for (var i = 0; i < menuObjects.length; i++) {
+      if (menuObjects[i].href == document.location.href) {
+        menuObjects[i].parentNode.classList.add("active");
+        menuObjects[i].addEventListener("click", function (event) {
+          event.preventDefault();
+        });
+      } else if (
+        menuObjects[i].getAttribute("href") == "index.html" &&
+        (document.location.pathname == "/" ||
+          document.location.pathname == "/index.html")
+      ) {
+        menuObjects[i].parentNode.classList.add("active");
+        menuObjects[i].addEventListener("click", function (event) {
+          event.preventDefault();
+        });
+      }
+    }
+  });
+});
+
+window.addEventListener("load", (event) => {
+  const smallLogoImage = document.querySelector(".small-logo img");
+  if (smallLogoImage) {
+    smallLogoImage.style.display = "block";
+  }
+});
+
+</script>
+
+
+
+
+

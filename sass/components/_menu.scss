@@ -1,0 +1,252 @@
+$header-z-index: 997;
+$menu-box-z-index: 998;
+$menu-nav-z-index: 999;
+$small-logo-z-index: 996;
+// $breakpoint-tablet: 768px;
+
+header {
+  position: fixed;
+  left: 1rem;
+  top: 1.17rem;
+  z-index: $header-z-index;
+  mix-blend-mode: exclusion;
+
+  @media (min-width: $breakpoint-tablet) {
+    top: 33px;
+    left: 33px;
+  }
+}
+
+.menu-box {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: $menu-box-z-index;
+  pointer-events: none;
+  padding: 2rem;
+  background: rgba(221, 221, 221, 0.5);
+  backdrop-filter: blur(60px);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+
+  &.active {
+    opacity: 1;
+  }
+
+  @media (min-width: $breakpoint-tablet) {
+    width: 235px;
+    border-radius: 20px;
+    right: 13px;
+    top: 7px;
+    background-color: #232629;
+    height: auto;
+    padding: 1rem;
+    margin: 1rem 1.2rem;
+  }
+}
+
+.menu-box-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: $menu-box-z-index;
+}
+
+.menu-symbol {
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+  vertical-align: bottom;
+  margin-left: 0.2rem;
+}
+
+#menu-nav {
+  z-index: $menu-nav-z-index;
+  position: fixed;
+  right: 1.5rem;
+  top: 1rem;
+  mix-blend-mode: exclusion;
+  @media (min-width: $breakpoint-tablet) {
+    right: 2.4rem;
+    top: 2rem;
+  }
+  // &:hover {
+  //   background-color: red;
+  // }
+
+  .bar {
+    margin: 5px;
+    width: 25px;
+    height: 3px;
+    background: white;
+    -webkit-border-radius: 1.5px;
+    -moz-border-radius: 1.5px;
+    border-radius: 1.5px;
+    transition: margin 0.2s, -webkit-transform 0.2s;
+    -o-transition: margin 0.2s, -o-transform 0.2s;
+    -moz-transition: margin 0.2s, transform 0.2s, -moz-transform 0.2s;
+    -webkit-transition: margin 0.2s, -webkit-transform 0.2s;
+    transition: margin 0.2s, transform 0.2s;
+    transition: margin 0.2s, transform 0.2s, -webkit-transform 0.2s,
+      -moz-transform 0.2s, -o-transform 0.2s;
+  }
+}
+
+#menu-icon {
+  display: inline-block;
+  -webkit-transform: scale(1.4);
+  -moz-transform: scale(1.4);
+  -ms-transform: scale(1.4);
+  -o-transform: scale(1.4);
+  transform: scale(1.4);
+  z-index: 999;
+
+  &.close {
+    .bar {
+      &:first-child {
+        -webkit-transform: translateY(8px) rotate(45deg);
+        -ms-transform: translateY(8px) rotate(45deg);
+        -moz-transform: translateY(8px) rotate(45deg);
+        -o-transform: translateY(8px) rotate(45deg);
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+      }
+
+      &:last-child {
+        -webkit-transform: translateY(-8px) rotate(-45deg);
+        -ms-transform: translateY(-8px) rotate(-45deg);
+        -moz-transform: translateY(-8px) rotate(-45deg);
+        -o-transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.menu-ul {
+  list-style-type: none;
+  pointer-events: none;
+  top: 26%;
+  transform: translateY(26%);
+  @media (min-width: $breakpoint-tablet) {
+    margin-top: 1.8rem;
+    transform: inherit;
+  }
+
+  li {
+    a {
+      display: block;
+      text-decoration: none;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      pointer-events: none;
+
+      @media (min-width: $breakpoint-tablet) {
+        font-size: 1.2rem;
+        padding: 0.3rem 0.5rem;
+        margin-bottom: inherit;
+
+        &:hover {
+          background-color: rgba(88, 88, 88, 0.2392156863);
+        }
+      }
+    }
+  }
+
+  .menu-object {
+    &.active {
+      a {
+        color: rgb(112, 112, 112);
+        font-weight: 600;
+        pointer-events: none;
+
+        &:hover {
+          cursor: default;
+          background-color: inherit;
+        }
+      }
+    }
+    &.inactive a {
+      color: grey; // or any color you prefer for inactive state
+      pointer-events: none; // optional, prevents clicking
+      opacity: 0.5; // makes it visually "disabled"
+
+      // &:hover {
+      //   cursor: default;
+      //   background-color: inherit; // keeps background unchanged on hover
+      // }
+    }
+  }
+}
+
+.contact-logo-container {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 85%; /* Match the width of .menu-box */
+  box-sizing: border-box; /* This ensures padding is included in the width */
+}
+
+.small-logo {
+  opacity: 0.9;
+  width: 50px;
+  z-index: $small-logo-z-index;
+  mix-blend-mode: exclusion;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// NOTIFICATION SYMBOL AND NEW POST BELOW
+
+.notification-menu {
+  background-color: #c83c4e;
+  border-radius: 100px;
+  aspect-ratio: 1/1;
+  width: 14px;
+  font-size: 10px;
+  color: white;
+  display: flex;
+  pointer-events: none;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  position: fixed;
+  z-index: 2000;
+  right: 20px;
+  top: 10px;
+  @media (min-width: $breakpoint-tablet) {
+    right: 33px;
+    top: 26px;
+  }
+}
+
+.new-post {
+  font-size: 0.6rem;
+  color: #c83c4e;
+  position: relative;
+  bottom: 2px;
+  margin-left: 3px;
+}
